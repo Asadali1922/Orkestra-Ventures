@@ -1,0 +1,80 @@
+CREATE TABLE `attendance` (
+	`id` int AUTO_INCREMENT NOT NULL,
+	`employeeId` int NOT NULL,
+	`date` date NOT NULL,
+	`checkIn` time,
+	`checkOut` time,
+	`status` enum('present','absent','late','half-day','leave') NOT NULL,
+	`leaveType` enum('sick','vacation','personal','unpaid'),
+	`notes` text,
+	`createdAt` timestamp NOT NULL DEFAULT (now()),
+	CONSTRAINT `attendance_id` PRIMARY KEY(`id`)
+);
+--> statement-breakpoint
+CREATE TABLE `employees` (
+	`id` int AUTO_INCREMENT NOT NULL,
+	`employeeId` varchar(50) NOT NULL,
+	`fullName` varchar(255) NOT NULL,
+	`email` varchar(320) NOT NULL,
+	`phone` varchar(50),
+	`position` varchar(255) NOT NULL,
+	`department` enum('management','operations','marketing','technology','finance','hr') NOT NULL,
+	`employmentType` enum('full-time','part-time','contract','intern') NOT NULL,
+	`salary` decimal(10,2),
+	`currency` varchar(10) DEFAULT 'EGP',
+	`hireDate` date NOT NULL,
+	`endDate` date,
+	`status` enum('active','on-leave','terminated') NOT NULL DEFAULT 'active',
+	`address` text,
+	`emergencyContact` varchar(255),
+	`emergencyPhone` varchar(50),
+	`notes` text,
+	`createdAt` timestamp NOT NULL DEFAULT (now()),
+	`updatedAt` timestamp NOT NULL DEFAULT (now()) ON UPDATE CURRENT_TIMESTAMP,
+	CONSTRAINT `employees_id` PRIMARY KEY(`id`),
+	CONSTRAINT `employees_employeeId_unique` UNIQUE(`employeeId`),
+	CONSTRAINT `employees_email_unique` UNIQUE(`email`)
+);
+--> statement-breakpoint
+CREATE TABLE `invoices` (
+	`id` int AUTO_INCREMENT NOT NULL,
+	`invoiceNumber` varchar(50) NOT NULL,
+	`clientName` varchar(255) NOT NULL,
+	`clientEmail` varchar(320),
+	`description` text NOT NULL,
+	`amount` decimal(10,2) NOT NULL,
+	`currency` varchar(10) DEFAULT 'EGP',
+	`taxAmount` decimal(10,2) DEFAULT '0',
+	`totalAmount` decimal(10,2) NOT NULL,
+	`status` enum('draft','sent','paid','overdue','cancelled') NOT NULL DEFAULT 'draft',
+	`issueDate` date NOT NULL,
+	`dueDate` date NOT NULL,
+	`paidDate` date,
+	`paymentMethod` varchar(100),
+	`notes` text,
+	`createdAt` timestamp NOT NULL DEFAULT (now()),
+	`updatedAt` timestamp NOT NULL DEFAULT (now()) ON UPDATE CURRENT_TIMESTAMP,
+	CONSTRAINT `invoices_id` PRIMARY KEY(`id`),
+	CONSTRAINT `invoices_invoiceNumber_unique` UNIQUE(`invoiceNumber`)
+);
+--> statement-breakpoint
+CREATE TABLE `transactions` (
+	`id` int AUTO_INCREMENT NOT NULL,
+	`transactionNumber` varchar(50) NOT NULL,
+	`type` enum('income','expense') NOT NULL,
+	`category` varchar(100) NOT NULL,
+	`description` text NOT NULL,
+	`amount` decimal(10,2) NOT NULL,
+	`currency` varchar(10) DEFAULT 'EGP',
+	`paymentMethod` varchar(100),
+	`referenceNumber` varchar(100),
+	`relatedInvoiceId` int,
+	`relatedExpenseId` int,
+	`transactionDate` date NOT NULL,
+	`status` enum('completed','pending','cancelled') NOT NULL DEFAULT 'completed',
+	`notes` text,
+	`createdAt` timestamp NOT NULL DEFAULT (now()),
+	`updatedAt` timestamp NOT NULL DEFAULT (now()) ON UPDATE CURRENT_TIMESTAMP,
+	CONSTRAINT `transactions_id` PRIMARY KEY(`id`),
+	CONSTRAINT `transactions_transactionNumber_unique` UNIQUE(`transactionNumber`)
+);
