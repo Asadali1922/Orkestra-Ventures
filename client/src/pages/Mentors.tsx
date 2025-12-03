@@ -207,7 +207,7 @@ export default function Mentors() {
                   )}
 
                   {/* Bio */}
-                  <p className="text-body-small text-[oklch(0.4_0.02_240)] mb-4 line-clamp-3">
+                  <p className="text-body-small text-[oklch(0.4_0.02_240)] mb-4 ">
                     {mentor.bio}
                   </p>
 
