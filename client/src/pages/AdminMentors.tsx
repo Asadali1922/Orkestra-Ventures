@@ -217,7 +217,7 @@ export default function AdminMentors() {
               </div>
               
               <div>
-                <label className="block text-sm font-medium mb-1">Email *</label>
+                <label className="block text-sm font-medium mb-1">Email </label>
                 <input
                   type="email"
                   
