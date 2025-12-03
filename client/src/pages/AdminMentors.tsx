@@ -20,6 +20,9 @@ export default function AdminMentors() {
     company: "",
     expertise: "",
     bio: "",
+    linkedin: "",
+  availability: "available",
+  rating: 5,
     status: "active" as any,
     sessionsCompleted: 0,
   });
@@ -56,6 +59,9 @@ export default function AdminMentors() {
       company: mentor.company || "",
       expertise: mentor.expertise || "",
       bio: mentor.bio || "",
+      linkedin: mentor.linkedin || "",
+availability: mentor.availability || "available",
+rating: mentor.rating || 5,
       status: mentor.status || "active",
       sessionsCompleted: mentor.sessionsCompleted || 0,
     });
@@ -71,6 +77,9 @@ export default function AdminMentors() {
       company: "",
       expertise: "",
       bio: "",
+      linkedin: "",
+  availability: "available",
+  rating: 5,
       status: "active",
       sessionsCompleted: 0,
     });
@@ -269,7 +278,41 @@ export default function AdminMentors() {
                   placeholder="Brief biography..."
                 />
               </div>
-              
+              <div>
+  <label className="block text-sm font-medium mb-1">LinkedIn URL</label>
+  <input
+    type="url"
+    value={formData.linkedin || ""}
+    onChange={(e) => setFormData({ ...formData, linkedin: e.target.value })}
+    className="w-full border rounded-lg px-3 py-2"
+    placeholder="https://linkedin.com/in/username"
+  />
+</div>
+
+<div>
+  <label className="block text-sm font-medium mb-1">Availability</label>
+  <select
+    value={formData.availability || "available"}
+    onChange={(e) => setFormData({ ...formData, availability: e.target.value })}
+    className="w-full border rounded-lg px-3 py-2"
+  >
+    <option value="available">Available</option>
+    <option value="busy">Busy</option>
+  </select>
+</div>
+
+<div>
+  <label className="block text-sm font-medium mb-1">Rating</label>
+  <input
+    type="number"
+    min="0"
+    max="5"
+    step="0.1"
+    value={formData.rating || ""}
+    onChange={(e) => setFormData({ ...formData, rating: e.target.value })}
+    className="w-full border rounded-lg px-3 py-2"
+  />
+</div>
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <label className="block text-sm font-medium mb-1">Status</label>
