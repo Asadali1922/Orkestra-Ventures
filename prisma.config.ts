@@ -1,5 +1,11 @@
-import { defineConfig, env } from 'prisma/config'
-import 'dotenv/config'
+import { defineConfig } from 'prisma/config'
+import dotenv from 'dotenv'
+import path from 'path'
+
+// Load .env.local FIRST (overrides .env)
+dotenv.config({ path: path.resolve(process.cwd(), '.env.local') })
+// Then load .env as fallback
+dotenv.config()
 
 const databaseUrl = process.env.DATABASE_URL
 if (!databaseUrl) {
